@@ -1,0 +1,42 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/master/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+on:
+  push:
+    branches: master
+
+name: render-quarto
+
+jobs:
+  render-quarto:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+        contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+      - name: Setup Renv
+        uses: r-lib/actions/setup-renv@v2
+      - name: Install packages
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            any::quarto
+      - name: Render quarto files
+        run: |
+          Rscript -e 'quarto::quarto_render("README.qmd")'
+
+      - name: Commit results
+        run: |
+          git config --local user.name "$GITHUB_ACTOR"
+          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git add README.qmd
+          git commit -m "Hora atualizada" || echo "No changes to commit"
+          git push origin master || echo "No changes to commit"

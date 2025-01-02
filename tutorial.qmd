@@ -1,0 +1,121 @@
+---
+editor:
+  markdown: 
+    wrap: 72
+---
+
+# Tutorial 
+
+## Como trabalhar no RStudio com GitHub e a funcionalidade GitHub Actions
+
+### O que eu farei neste projeto?
+
+Este é um exemplo de como criar um projeto R e conectá-lo ao GitHub.
+Além disso, também utilizaremos a funcionalidade GitHub Actions para
+sempre que um usuário realizar um push ou para um período de tempo
+pré-determinado seja disparada uma action realizando determinada ação
+pelo servidor do GitHub.
+
+#### Criando o projeto R localmente e enviando para o GitHub
+
+1.  O passo inicial é criar um projeto R no diretório de interesse. Para
+    esse exemplo, criaremos o projeto em :
+    \`C:\Arquivos\Documents\GhActions-Exemplo2.Rproj\`.
+
+2.  Quando da criação do projeto, selecione a opção de que o projeto
+    seja acompanhado pelo Git.
+
+3.  Precisaremos do pacote *usethis* para conectar o projeto ao GitHub.
+    Assim, iremos realizar a instalação:
+
+``` R
+install.packages("usethis")
+```
+
+4.  Agora, precisaremos informar ao RStudio que vamos trabalhar com Git.
+
+``` R
+usethis::use_git()
+```
+
+5.  Após o comando acima, você receberá uma mensagem informando que
+    alguns arquivos foram adicionados e que existem diversos arquivos
+    que ainda não foram *commitados*. No fim da mensagem, o RStudio
+    perguntará se você deseja *commitar* esses arquivos agora. Pode
+    realizar o *commit* nesse momento.
+6.  Ótimo. Agora os arquivos já estão prontos para serem enviados ao
+    GitHub. No entanto, você pode verificar que o botão de Push, na guia
+    Git do RStudio, ainda não está habilitado. Para resolver, vamos
+    informar ao RStudio pra qual endereço do GitHub ele deve enviar os
+    arquivos:
+
+``` R
+usethis::use_github()
+```
+
+7.  Após isso, você receberá mensagem informando que o repositório foi
+    criado no GitHub. Observe que os arquivos já foram enviados para o
+    repositório na web.
+
+#### Atualizando nosso arquivo README.md automaticamente
+
+Para nosso exemplo, vamos atualizar o arquivo README.md automaticamente.
+Dessa forma, como o GitHub roda os arquivos .md e já apresenta o
+resultado de forma formatada na sua própria página inicial, nós veremos
+o resultado da nossa Action de forma mais rápida e transparente.
+
+Assim, precisaremos criar nosso arquivo README.Rmd, o qual gerará o
+arquivo README.md:
+
+``` R
+usethis::use_readme_rmd()
+```
+
+Esse comando criará um arquivo de exemplo README.Rmd, o qual deve ser
+ajustado de acordo com o seu interesse.
+
+A título de exemplo, vamos editar o README.Rmd da seguinte forma:
+
+```` R
+---
+output: github_document
+---
+
+```{r, include = FALSE}
+current_time<-Sys.time()|>
+  format("%d/%m/%Y %H:%M")
+  
+```
+
+Este documento foi atualizado pela última vez em: `r current_time`
+````
+
+#### Utilizando a funcionalidade GitHub Actions
+
+O GitHub Actions é muito útil para automatizar tarefas. Em nosso caso,
+vamos utilizá-lo para sempre que um usuário realizar um *push* (ou para
+que em determinado período de tempo) um de nossos arquivos seja
+atualizados automaticamente.
+
+**Perceba que essa funcionalidade pode ser extremamente útil para
+tarefas como atualização de bases de dados e dashboards.**
+
+1.  Para que que o GitHub Actions funcione, nós deveremos criar, no
+    repositório, uma pasta denominada *.github*. Dentro dessa pasta,
+    cria-se outra pasta chamada *workflows.* É nesse endereço que o
+    GitHub Actions vai procurar o arquivo .yaml, o qual conterá as
+    instruções das ações que devem ser automatizadas.
+
+2.  Exemplos de como o arquivo .yaml deve ser formatado pode ser
+    encontrado [nesse
+    repositório](https://github.com/r-lib/actions/tree/old/examples#readme).
+    Em nosso caso, vamos utilizar como base [este
+    documento](https://github.com/r-lib/actions/tree/old/examples#render-rmarkdown).
+
+#### Criando o arquivo .yaml
+
+Com base nos links apresentados acima, construímos o seguinte código
+para ser incluído na pasta *workflows*:
+
+``` R
+```

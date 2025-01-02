@@ -1,0 +1,12 @@
+---
+title: "Atualização do Documento"
+format: gfm
+---
+
+```{r}
+current_time <- Sys.time() |>
+  format("%d/%m/%Y %H:%M")
+```
+
+Este documento foi atualizado pela última vez em: `r current_time`
+
