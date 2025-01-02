@@ -69,19 +69,18 @@ arquivo README.md:
 
 A título de exemplo, vamos editar o README.qmd da seguinte forma:
 
-```` r
+```{r,eval=FALSE}
 ---
 title: "Atualização do Documento"
 format: gfm
 ---
 
-```{r}
 current_time <- Sys.time() |>
   format("%d/%m/%Y %H:%M")
-```
+
 
 Este documento foi atualizado pela última vez em: `r current_time`
-````
+```
 
 #### Utilizando a funcionalidade GitHub Actions
 
@@ -110,7 +109,7 @@ tarefas como atualização de bases de dados e dashboards.**
 Com base nos links apresentados acima, construímos o seguinte código
 para ser incluído na pasta *workflows*:
 
-``` yaml
+```         
 # Workflow derived from https://github.com/r-lib/actions/tree/master/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
