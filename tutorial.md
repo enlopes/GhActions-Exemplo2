@@ -1,8 +1,3 @@
----
-editor:
-  markdown: 
-    wrap: 72
----
 
 # Tutorial
 
@@ -32,18 +27,18 @@ pelo servidor do GitHub.
 install.packages("usethis")
 ```
 
-4.  Agora, precisaremos informar ao RStudio que vamos trabalhar com Git.
+1.  Agora, precisaremos informar ao RStudio que vamos trabalhar com Git.
 
 ``` r
 usethis::use_git()
 ```
 
-5.  Após o comando acima, você receberá uma mensagem informando que
+1.  Após o comando acima, você receberá uma mensagem informando que
     alguns arquivos foram adicionados e que existem diversos arquivos
     que ainda não foram *commitados*. No fim da mensagem, o RStudio
     perguntará se você deseja *commitar* esses arquivos agora. Pode
     realizar o *commit* nesse momento.
-6.  Ótimo. Agora os arquivos já estão prontos para serem enviados ao
+2.  Ótimo. Agora os arquivos já estão prontos para serem enviados ao
     GitHub. No entanto, você pode verificar que o botão de Push, na guia
     Git do RStudio, ainda não está habilitado. Para resolver, vamos
     informar ao RStudio pra qual endereço do GitHub ele deve enviar os
@@ -53,7 +48,7 @@ usethis::use_git()
 usethis::use_github()
 ```
 
-7.  Após isso, você receberá mensagem informando que o repositório foi
+1.  Após isso, você receberá mensagem informando que o repositório foi
     criado no GitHub. Observe que os arquivos já foram enviados para o
     repositório na web.
 
@@ -75,12 +70,15 @@ title: "Atualização do Documento"
 format: gfm
 ---
 
-```{r}
+::: {.cell}
+
+```{.r .cell-code}
 current_time <- Sys.time() |>
   format("%d/%m/%Y %H:%M")
 ```
+:::
 
-Este documento foi atualizado pela última vez em: `r current_time`
+Este documento foi atualizado pela última vez em: 02/01/2025 00:32
 ````
 
 #### Utilizando a funcionalidade GitHub Actions

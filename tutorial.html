@@ -89,7 +89,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="criando-o-projeto-r-localmente-e-enviando-para-o-github" class="level4">
 <h4 class="anchored" data-anchor-id="criando-o-projeto-r-localmente-e-enviando-para-o-github">Criando o projeto R localmente e enviando para o GitHub</h4>
 <ol type="1">
-<li><p>O passo inicial é criar um projeto R no diretório de interesse. Para esse exemplo, criaremos o projeto em : `C:-Exemplo2.Rproj`.</p></li>
+<li><p>O passo inicial é criar um projeto R no diretório de interesse. Para esse exemplo, criaremos o projeto em : <code>C:\Arquivos\Documents\GhActions-Exemplo2.Rproj</code></p></li>
 <li><p>Quando da criação do projeto, selecione a opção de que o projeto seja acompanhado pelo Git.</p></li>
 <li><p>Precisaremos do pacote <em>usethis</em> para conectar o projeto ao GitHub. Assim, iremos realizar a instalação:</p></li>
 </ol>
@@ -100,12 +100,88 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="5" type="1">
 <li>Após o comando acima, você receberá uma mensagem informando que alguns arquivos foram adicionados e que existem diversos arquivos que ainda não foram <em>commitados</em>. No fim da mensagem, o RStudio perguntará se você deseja <em>commitar</em> esses arquivos agora. Pode realizar o <em>commit</em> nesse momento.</li>
-<li>Ótimo. Agora os arquivos já estão prontos para serem enviados ao GitHub. No entanto, você pode verificar que o botão de Push, na guia Git do RStudio, ainda não está habilitado. Para resolver, vamos informar ao RStudio pra qual endereço do GiHub ele deve enviar os arquivos:</li>
+<li>Ótimo. Agora os arquivos já estão prontos para serem enviados ao GitHub. No entanto, você pode verificar que o botão de Push, na guia Git do RStudio, ainda não está habilitado. Para resolver, vamos informar ao RStudio pra qual endereço do GitHub ele deve enviar os arquivos:</li>
 </ol>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="7" type="1">
 <li>Após isso, você receberá mensagem informando que o repositório foi criado no GitHub. Observe que os arquivos já foram enviados para o repositório na web.</li>
 </ol>
+</section>
+<section id="atualizando-nosso-arquivo-readme.md-automaticamente" class="level4">
+<h4 class="anchored" data-anchor-id="atualizando-nosso-arquivo-readme.md-automaticamente">Atualizando nosso arquivo README.md automaticamente</h4>
+<p>Para nosso exemplo, vamos atualizar o arquivo README.md automaticamente. Dessa forma, como o GitHub roda os arquivos .md e já apresenta o resultado de forma formatada na sua própria página inicial, nós veremos o resultado da nossa Action de forma mais rápida e transparente.</p>
+<p>Assim, precisaremos criar nosso arquivo README.qmd, o qual gerará o arquivo README.md:</p>
+<p>A título de exemplo, vamos editar o README.qmd da seguinte forma:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Atualização do Documento"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>format<span class="sc">:</span> gfm</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="er">:::</span> {.cell}</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">{.r .cell-code}</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="at">current_time &lt;- Sys.time() |&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="at">  format("%d/%m/%Y %H:%M")</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="sc">:::</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>Este documento foi atualizado pela última vez em<span class="sc">:</span> <span class="dv">02</span><span class="sc">/</span><span class="dv">01</span><span class="sc">/</span><span class="dv">2025</span> <span class="dv">00</span><span class="sc">:</span><span class="dv">31</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="utilizando-a-funcionalidade-github-actions" class="level4">
+<h4 class="anchored" data-anchor-id="utilizando-a-funcionalidade-github-actions">Utilizando a funcionalidade GitHub Actions</h4>
+<p>O GitHub Actions é muito útil para automatizar tarefas. Em nosso caso, vamos utilizá-lo para sempre que um usuário realizar um <em>push</em> (ou para que em determinado período de tempo) um de nossos arquivos seja atualizados automaticamente.</p>
+<p><strong>Perceba que essa funcionalidade pode ser extremamente útil para tarefas como atualização de bases de dados e dashboards.</strong></p>
+<ol type="1">
+<li><p>Para que que o GitHub Actions funcione, nós deveremos criar, no repositório, uma pasta denominada <em>.github</em>. Dentro dessa pasta, cria-se outra pasta chamada <em>workflows.</em> É nesse endereço que o GitHub Actions vai procurar o arquivo .yaml, o qual conterá as instruções das ações que devem ser automatizadas.</p></li>
+<li><p>Exemplos de como o arquivo .yaml deve ser formatado pode ser encontrado <a href="https://github.com/r-lib/actions/tree/old/examples#readme">nesse repositório</a>. Em nosso caso, vamos utilizar como base <a href="https://github.com/r-lib/actions/tree/old/examples#render-rmarkdown">este documento</a>.</p></li>
+</ol>
+</section>
+<section id="criando-o-arquivo-.yaml" class="level4">
+<h4 class="anchored" data-anchor-id="criando-o-arquivo-.yaml">Criando o arquivo .yaml</h4>
+<p>Com base nos links apresentados acima, construímos o seguinte código para ser incluído na pasta <em>workflows</em>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Workflow derived from https://github.com/r-lib/actions/tree/master/examples</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> master</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> render-quarto</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">render-quarto</span><span class="kw">:</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">GITHUB_PAT</span><span class="kw">:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">permissions</span><span class="kw">:</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">contents</span><span class="kw">:</span><span class="at"> write</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Checkout repo</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">fetch-depth</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Setup pandoc</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/setup-pandoc@v2</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Setup R</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/setup-r@v2</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Setup Renv</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/setup-renv@v2</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install packages</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/setup-r-dependencies@v2</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="fu">          packages</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>            any::quarto</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Render quarto files</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>          Rscript -e 'quarto::quarto_render("README.qmd")'</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Commit results</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>          git config --local user.name "$GITHUB_ACTOR"</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>          git add .</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>          git commit -m "Hora atualizada" || echo "No changes to commit"</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>          git push origin master || echo "No changes to commit"</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Agora já temos todos nossos arquivos configurados e o próximo passo é realizar o commit e push na brain master do repositório e pode-se verificar que o arquivo README da página inicial do GitHub foi atualizado.</p>
 </section>
 </section>
 </section>
